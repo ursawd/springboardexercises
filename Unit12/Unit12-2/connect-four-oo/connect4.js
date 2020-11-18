@@ -4,7 +4,7 @@
  * column until a player gets four-in-a-row (horiz, vert, or diag) or until
  * board fills (tie)
  */
-
+class Game{
 const WIDTH = 7;
 const HEIGHT = 6;
 
@@ -149,3 +149,4 @@ function checkForWin() {
 
 makeBoard();
 makeHtmlBoard();
+}
