@@ -13,7 +13,6 @@ class Game {
     this.board = [];
     this.makeBoard();
     this.makeHtmlBoard();
-    console.log(this);
   }
 
   // const WIDTH = 7;
@@ -40,7 +39,7 @@ class Game {
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement("tr");
     top.setAttribute("id", "column-top");
-    top.addEventListener("click", this.handleClick);
+    top.addEventListener("click", this.handleClick.bind(this));
 
     for (let x = 0; x < this.WIDTH; x++) {
       const headCell = document.createElement("td");
@@ -68,7 +67,7 @@ class Game {
 
   findSpotForCol(x) {
     for (let y = this.HEIGHT - 1; y >= 0; y--) {
-      if (!board[y][x]) {
+      if (!this.board[y][x]) {
         return y;
       }
     }
@@ -80,7 +79,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement("div");
     piece.classList.add("piece");
-    piece.classList.add(`p${currPlayer}`);
+    piece.classList.add(`p${this.currPlayer}`);
     piece.style.top = -50 * (y + 2);
 
     const spot = document.getElementById(`${y}-${x}`);
@@ -100,27 +99,27 @@ class Game {
     const x = +evt.target.id;
 
     // get next spot in column (if none, ignore click)
-    const y = findSpotForCol(x);
+    const y = this.findSpotForCol(x);
     if (y === null) {
       return;
     }
 
     // place piece in board and add to HTML table
-    board[y][x] = currPlayer;
+    this.board[y][x] = this.currPlayer;
     this.placeInTable(y, x);
 
     // check for win
-    if (this.checkForWin()) {
-      return this.endGame(`Player ${currPlayer} won!`);
+    if (this.checkForWin.call(this)) {
+      return this.endGame(`Player ${this.currPlayer} won!`);
     }
 
     // check for tie
-    if (board.every((row) => row.every((cell) => cell))) {
+    if (this.board.every((row) => row.every((cell) => cell))) {
       return this.endGame("Tie!");
     }
 
     // switch players
-    currPlayer = currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
   }
 
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -134,15 +133,15 @@ class Game {
       return cells.every(
         ([y, x]) =>
           y >= 0 &&
-          y < HEIGHT &&
+          y < this.HEIGHT &&
           x >= 0 &&
-          x < WIDTH &&
-          board[y][x] === currPlayer
+          x < this.WIDTH &&
+          this.board[y][x] === this.currPlayer
       );
     }
 
-    for (let y = 0; y < HEIGHT; y++) {
-      for (let x = 0; x < WIDTH; x++) {
+    for (let y = 0; y < this.HEIGHT; y++) {
+      for (let x = 0; x < this.WIDTH; x++) {
         // get "check list" of 4 cells (starting here) for each of the different
         // ways to win
         const horiz = [
@@ -172,10 +171,10 @@ class Game {
 
         // find winner (only checking each win-possibility as needed)
         if (
-          this._win(horiz) ||
-          this._win(vert) ||
-          this._win(diagDR) ||
-          this._win(diagDL)
+          _win.bind(this, horiz) ||
+          _win.bind(this, vert) ||
+          _win.bind(this, diagDR) ||
+          _win.bind(this, diagDL)
         ) {
           return true;
         }
@@ -187,6 +186,4 @@ class Game {
   // // makeHtmlBoard();
   //!end of Game class
 }
-console.log("before new Game");
 new Game(6, 7);
-console.log("afer new Game");
