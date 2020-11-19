@@ -15,12 +15,15 @@ class Game {
     this.firstGame = true;
     this.endGameFlag = false;
     this.x = undefined;
+    this.p1 = undefined;
+    this.p2 = undefined;
+    this.makePlayers();
     this.makeBoard();
     this.makeHtmlBoard();
     this.makeStartButton();
   }
   //^^^^^^^^^^^^^^^^^^^^^^END CONSTRUCTOR^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  /** makeStartButton: creaete Start Button on top of game board*/
+  /** makeStartButton: create Start Button on top of game board*/
   makeStartButton() {
     const startBtn = document.createElement("button");
     startBtn.setAttribute("id", "start-button");
@@ -44,11 +47,11 @@ class Game {
       this.firstGame = false;
     }
 
-    this.currPlayer = 1;
+    this.currPlayer = this.p1;
 
     /** remove spots form html board */
     const allSpots = document.querySelectorAll("td>div");
-    console.log("allSpots", allSpots);
+    // console.log("allSpots", allSpots);
     for (let spot of allSpots) {
       spot.remove();
     }
@@ -59,6 +62,13 @@ class Game {
         this.board[y][x] = undefined;
       }
     }
+  }
+  /** make players */
+  makePlayers() {
+    this.p1 = new Player(1, "blue");
+    this.p2 = new Player(2, "red");
+    console.log(this.p1, this.p2);
+    this.currPlayer = this.p1;
   }
 
   /** makeBoard: create in-JS board structure:
@@ -118,7 +128,7 @@ class Game {
   placeInTable(y, x) {
     const piece = document.createElement("div");
     piece.classList.add("piece");
-    piece.classList.add(`p${this.currPlayer}`);
+    piece.classList.add(`p${this.currPlayer.player}`);
     piece.style.top = -50 * (y + 2);
 
     const spot = document.getElementById(`${y}-${x}`);
@@ -161,7 +171,7 @@ class Game {
     }
 
     // switch players
-    this.currPlayer = this.currPlayer === 1 ? 2 : 1;
+    this.currPlayer = this.currPlayer === this.p1 ? this.p2 : this.p1;
   }
 
   /** checkForWin: check board cell-by-cell for "does a win start here?" */
@@ -227,5 +237,11 @@ class Game {
   // // makeBoard();
   // // makeHtmlBoard();
   //!end of Game class
+}
+class Player {
+  constructor(player, color) {
+    this.color = color;
+    this.player = player;
+  }
 }
 new Game(6, 7);
