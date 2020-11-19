@@ -171,10 +171,10 @@ class Game {
 
         // find winner (only checking each win-possibility as needed)
         if (
-          _win.bind(this, horiz) ||
-          _win.bind(this, vert) ||
-          _win.bind(this, diagDR) ||
-          _win.bind(this, diagDL)
+          _win.call(this, horiz) ||
+          _win.call(this, vert) ||
+          _win.call(this, diagDR) ||
+          _win.call(this, diagDL)
         ) {
           return true;
         }
