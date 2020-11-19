@@ -21,13 +21,27 @@ class Game {
     this.makeBoard();
     this.makeHtmlBoard();
     this.makeStartButton();
+    this.addChangeColors();
   }
   //^^^^^^^^^^^^^^^^^^^^^^END CONSTRUCTOR^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  addChangeColors() {
+    const form = document.querySelector("#input-form");
+    //* arrow function used here allows correct this binding
+    form.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!(event.target.id === "ply1" || event.target.id === "ply2")) {
+        this.p1.color = form.player1color.value;
+        this.p2.color = form.player2color.value;
+      }
+    });
+  }
+
   /** makeStartButton: create Start Button on top of game board*/
   makeStartButton() {
     const startBtn = document.createElement("button");
     startBtn.setAttribute("id", "start-button");
     startBtn.innerText = "Click to start game";
+    startBtn.style.marginBottom = "7px";
     const body = document.querySelector("body");
     body.prepend(startBtn);
     startBtn.addEventListener("click", this.handleStartClick.bind(this));
@@ -65,9 +79,8 @@ class Game {
   }
   /** make players */
   makePlayers() {
-    this.p1 = new Player(1, "blue");
-    this.p2 = new Player(2, "red");
-    console.log(this.p1, this.p2);
+    this.p1 = new Player(1);
+    this.p2 = new Player(2);
     this.currPlayer = this.p1;
   }
 
@@ -130,7 +143,7 @@ class Game {
     piece.classList.add("piece");
     piece.classList.add(`p${this.currPlayer.player}`);
     piece.style.top = -50 * (y + 2);
-
+    piece.style.backgroundColor = this.currPlayer.color;
     const spot = document.getElementById(`${y}-${x}`);
     spot.append(piece);
   }
@@ -162,7 +175,7 @@ class Game {
 
     // check for win
     if (this.checkForWin.call(this)) {
-      return this.endGame(`Player ${this.currPlayer} won!`);
+      return this.endGame(`Player ${this.currPlayer.player} won!`);
     }
 
     // check for tie
@@ -239,8 +252,8 @@ class Game {
   //!end of Game class
 }
 class Player {
-  constructor(player, color) {
-    this.color = color;
+  constructor(player) {
+    this.color = undefined;
     this.player = player;
   }
 }
