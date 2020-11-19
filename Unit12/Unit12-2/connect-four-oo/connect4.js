@@ -1,4 +1,5 @@
 "use strict";
+
 /** Connect Four
  *
  * Player 1 and 2 alternate turns. On each turn, a piece is dropped down a
@@ -9,17 +10,56 @@ class Game {
   constructor(height, width) {
     this.HEIGHT = height;
     this.WIDTH = width;
-    this.currPlayer = 1;
-    this.board = [];
+    this.currPlayer = 1; // active player: 1 or 2
+    this.board = []; // array of rows, each row is array of cells  (board[y][x])
+    this.firstGame = true;
+    this.endGameFlag = false;
+    this.x = undefined;
     this.makeBoard();
     this.makeHtmlBoard();
+    this.makeStartButton();
   }
+  //^^^^^^^^^^^^^^^^^^^^^^END CONSTRUCTOR^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  /** makeStartButton: creaete Start Button on top of game board*/
+  makeStartButton() {
+    const startBtn = document.createElement("button");
+    startBtn.setAttribute("id", "start-button");
+    startBtn.innerText = "Click to start game";
+    const body = document.querySelector("body");
+    body.prepend(startBtn);
+    startBtn.addEventListener("click", this.handleStartClick.bind(this));
+  }
+  /** handle click of start button*/
+  handleStartClick() {
+    /** add event listener to top row of selector cells */
+    const top = document.querySelector("#column-top");
+    /** only bind event listener once (firstGame) otherwise
+     * a single click will process twice 2nd game, 3 times
+     * third game, etc.
+     */
+    if (this.firstGame || this.endGameFlag) {
+      this.x = this.handleClick.bind(this);
+      top.addEventListener("click", this.x);
 
-  // const WIDTH = 7;
-  // const HEIGHT = 6;
+      this.firstGame = false;
+    }
 
-  // let currPlayer = 1; // active player: 1 or 2
-  // let board = []; // array of rows, each row is array of cells  (board[y][x])
+    this.currPlayer = 1;
+
+    /** remove spots form html board */
+    const allSpots = document.querySelectorAll("td>div");
+    console.log("allSpots", allSpots);
+    for (let spot of allSpots) {
+      spot.remove();
+    }
+
+    /** empty internal board*/
+    for (let y = 0; y < this.HEIGHT; y++) {
+      for (let x = 0; x < this.WIDTH; x++) {
+        this.board[y][x] = undefined;
+      }
+    }
+  }
 
   /** makeBoard: create in-JS board structure:
    *   board = array of rows, each row is array of cells  (board[y][x])
@@ -39,7 +79,6 @@ class Game {
     // make column tops (clickable area for adding a piece to that column)
     const top = document.createElement("tr");
     top.setAttribute("id", "column-top");
-    top.addEventListener("click", this.handleClick.bind(this));
 
     for (let x = 0; x < this.WIDTH; x++) {
       const headCell = document.createElement("td");
@@ -90,6 +129,9 @@ class Game {
 
   endGame(msg) {
     alert(msg);
+    const top = document.querySelector("#column-top");
+    top.removeEventListener("click", this.x);
+    this.endGameFlag = true;
   }
 
   /** handleClick: handle click of column top to play piece */
