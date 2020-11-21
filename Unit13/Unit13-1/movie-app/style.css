@@ -1,0 +1,17 @@
+span {
+  width: 200px;
+  display: inline-block;
+}
+button {
+  margin: 0 4px 0 4px;
+}
+p {
+  display: inline-block;
+}
+#sort-warnings {
+  margin: 0 0 10px 0;
+  padding: 10px;
+}
+.movie-list {
+  margin-top: 10px;
+}
