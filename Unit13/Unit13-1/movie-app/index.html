@@ -9,10 +9,13 @@
   <body>
     <h1>This is the movie app</h1>
     <div id="sort-warnings">
-      <button id="sortTA">Sort Title a-z</button>
-      <button id="sortTD">Sort Title z-a</button>
-      <button id="sortRA">Sort Rating 0-10</button>
-      <button id="sortRD">Sort Rating 10-0</button>
+      <label for="sorts">Sort:</label>
+      <select name="sorts" id="sorts">
+        <option id="s1" value="TA">Sort Title a-z</option>
+        <option id="s2" value="TD">Sort Title z-a</option>
+        <option id="s3" value="RA">Sort Rating 0-10</option>
+        <option id="s4" value="RD">Sort Rating 10-0</option>
+      </select>
       <p id="warnings"></p>
     </div>
     <div class="form-container">
@@ -26,6 +29,6 @@
     </div>
     <div class="movie-list"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="index.js"></script>
+    <script src="index2.js"></script>
   </body>
 </html>

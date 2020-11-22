@@ -6,7 +6,8 @@ button {
   margin: 0 4px 0 4px;
 }
 p {
-  display: inline-block;
+  display: inline;
+  width: 200px;
 }
 #sort-warnings {
   margin: 0 0 10px 0;
