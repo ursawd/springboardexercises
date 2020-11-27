@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <title>Giphy Party!</title>
+  </head>
+  <body class="bg-info">
+    <header class="container text-center">
+      <h1>GIPHY PARTY</h1>
+    </header>
+    <section id="section-1" class="container">
+      <div class="row justify-content-center">
+        <form action="#" class="form-inline" id="search-form">
+          <input
+            type="text"
+            class="form-control"
+            name="search-str"
+            id="search-id"
+            placeholder="Enter search term"
+          />
+          <button
+            type="submit"
+            id="search-button"
+            class="btn btn-secondary mr-1 ml-1"
+          >
+            Search Giphy!
+          </button>
+
+          <button id="remove-button" class="btn btn-danger">
+            Remove Images
+          </button>
+        </form>
+      </div>
+    </section>
+    <section id="section-2">
+      <div class="container">
+        <div class="row" id="gif-row"></div>
+      </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
