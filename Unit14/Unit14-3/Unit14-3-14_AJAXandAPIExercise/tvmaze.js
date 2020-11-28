@@ -88,7 +88,6 @@ $("#search-form").on("submit", async function handleSearch(evt) {
 /** Given a show ID, return list of episodes:
  *      { id, name, season, number }
  */
-
 async function getEpisodes(id) {
   const episodes = await axios.get(
     `http://api.tvmaze.com/shows/${id}/episodes`
@@ -103,8 +102,10 @@ async function getEpisodes(id) {
       number: episodes.data[i].number,
     });
   }
-  populateEpisodes(episodesArr);
+  return episodesArr;
 }
+
+//**  append episode info into DOM*/
 function populateEpisodes(episodesArr) {
   for (let episode of episodesArr) {
     $("#episodes-list").append(
@@ -112,9 +113,11 @@ function populateEpisodes(episodesArr) {
     );
   }
 }
-//** event listener for episodes button */
-$("#shows-list").on("click", function (event) {
+
+//** event listener for episodes button / process click event*/
+$("#shows-list").on("click", async function handleEpisodesClick(event) {
   const showId = event.target.closest(".Show").dataset.showId;
   $("#episodes-area").css("display", "block");
-  getEpisodes(showId);
+  const epiArr = await getEpisodes(showId);
+  populateEpisodes(epiArr);
 });
