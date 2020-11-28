@@ -31,6 +31,6 @@ function displayGiphyData(giphyData) {
 //** process remove images button */
 $("#remove-button").on("click", function (event) {
   event.preventDefault();
-  $("#gif-row").html("");
+  $("#gif-row").html(""); // remove all images on row
   img_count = 0;
 });
