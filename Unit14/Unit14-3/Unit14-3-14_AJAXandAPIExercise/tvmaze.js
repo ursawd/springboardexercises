@@ -16,6 +16,9 @@
         image: <an image from the show data, or a default imege if no image exists, (image isn't needed until later)>
       }
  */
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+let showTitle;
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 //** called by search button event listener */
 async function searchShows(query) {
   const shows = await axios.get(
@@ -112,12 +115,21 @@ function populateEpisodes(episodesArr) {
       `<li>${episode.name} (season ${episode.season}, number ${episode.number})</li>`
     );
   }
+  $(".modal-title").text(showTitle);
+  //** call modal popup */
+  $("#myModal").modal();
 }
 
 //** event listener for episodes button / process click event*/
-$("#shows-list").on("click", async function handleEpisodesClick(event) {
-  const showId = event.target.closest(".Show").dataset.showId;
-  $("#episodes-area").css("display", "block");
-  const epiArr = await getEpisodes(showId);
-  populateEpisodes(epiArr);
-});
+$("#shows-list").on(
+  "click",
+  "button",
+  async function handleEpisodesClick(event) {
+    const showId = event.target.closest(".Show").dataset.showId;
+    showTitle = event.target.parentElement.firstElementChild.innerText;
+    console.log(showTitle);
+    $("#episodes-area").css("display", "block");
+    const epiArr = await getEpisodes(showId);
+    populateEpisodes(epiArr);
+  }
+);
