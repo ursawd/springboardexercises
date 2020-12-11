@@ -16,3 +16,4 @@ def friend_date(a, b):
         >>> friend_date(sauron, gandalf)
         True
     """
+    return not set(a[2]).isdisjoint(set(b[2]))
