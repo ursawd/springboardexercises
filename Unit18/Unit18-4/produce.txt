@@ -1,0 +1,18 @@
+# Veggies
+
+kale
+parsnips
+
+lettuce
+
+# Meat
+
+# Fruits
+# Dairy
+
+apple
+
+orange
+mango
+
+banana
