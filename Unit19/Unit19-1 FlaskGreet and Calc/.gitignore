@@ -1,0 +1,4 @@
+.vscode
+flask_greet_calc.code_workspace
+venv/
+settings.json
