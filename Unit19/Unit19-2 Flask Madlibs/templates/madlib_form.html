@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content%}
 <h1>Madlibs</h1>
-<form action="/display_matlib" method="get">
+<form id="madlib-form" action="/display_matlib" method="get">
   <table>
     {% for prompt in story.prompts %}
     <div>
@@ -15,6 +15,8 @@
     </div>
     {% endfor %}
   </table>
-  <button type="submit" style="width: 60px; height: 30px">Submit</button>
+  <button id="button" type="submit" style="width: 60px; height: 30px">
+    Submit
+  </button>
 </form>
 {% endblock %}
