@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MADLIBS</title>
-  </head>
-  <body>
-    <h1>Madlibs</h1>
-    <form action="/display_matlib" method="get">
-      {% for prompt in story.prompts %}
-      <div>
-        <label
-          >{{prompt}}
+{% extends 'base.html' %} {% block content%}
+<h1>Madlibs</h1>
+<form action="/display_matlib" method="get">
+  <table>
+    {% for prompt in story.prompts %}
+    <div>
+      <tr>
+        <td>
+          <label>{{prompt}}</label>
+        </td>
+        <td>
           <input type="text" name="{{prompt}}" id="" />
-        </label>
-      </div>
-      {% endfor %}
-
-      <button type="submit" style="width: 60px; height: 30px">Submit</button>
-    </form>
-  </body>
-</html>
+        </td>
+      </tr>
+    </div>
+    {% endfor %}
+  </table>
+  <button type="submit" style="width: 60px; height: 30px">Submit</button>
+</form>
+{% endblock %}

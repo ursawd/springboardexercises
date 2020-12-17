@@ -1,0 +1,12 @@
+{% extends 'base.html' %} {% block content%}
+<h1>Welcome to Madlib!</h1>
+<p>Pick a story template from dropdown</p>
+<form action="/madlib_form" method="get">
+  <select name="template_choice" id="">
+    <option value="template1">Template One</option>
+    <option value="template2">Template Two</option>
+  </select>
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}
